@@ -11,7 +11,7 @@ Eu estava precisando acessar uma DLL especifica no Windows para automatizar um p
 Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).
 
 Em casa, consegui escrever 2 scripts para versões distintas e finalmente criar o script para acessar a DLL, o script é tão simples que cheguei seriamente a pensar em não publicar isso, mas como pode ser util para alguém, segue ai!
-{% codeblock lang:ruby %}
+{% codeblock dlopen18.rb lang:ruby %}
 require ‘dl’
 
 dl = DL.dlopen(‘libcurl.so’)
@@ -20,7 +20,7 @@ puts mycall.call
 
 {% endcodeblock %}
 E a versão para Ruby 1.9.2, que é um pouquinho diferente, mas tão facil quanto:
-{% codeblock lang:ruby %}
+{% codeblock dlopen19.rb lang:ruby %}
 require ‘dl’
 require ‘fiddle’
 

@@ -10,10 +10,10 @@ Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura 
 
 Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor
 
-<pre>
+{% codeblock /etc/mysql/my\.cnf %}
 log_bin                 = /var/lib/mysql/mysql-bin.log
 expire_logs_days        = 10
-</pre>
+{% endcodeblock %}
 
 O ``expire_logs_days`` é a quantidade de dias que os bin-logs devem permanecer no servidor antes que sejam deletados, já na primeira linha, indica onde os bin-logs serão salvos, neste caso em ``/var/lib/mysql``, é uma boa idéia separar a pasta onde os arquivos serão salvos caso você deseje realizar o backup incremental.
 <pre>
