@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux | bloated]]></title>
+  <link href="http://deadc.github.com/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://deadc.github.com/"/>
+  <updated>2012-10-20T19:15:56-03:00</updated>
+  <id>http://deadc.github.com/</id>
+  <author>
+    <name><![CDATA[deadc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SSH Tips: ssh-agent vs. ssh_config]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
+    <updated>2012-10-20T18:17:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
+    <content type="html"><![CDATA[<p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
+
+<p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
+
+<p>O problema é que nem todas as distribuições oferecem ele como pacote padrão, além disso, o ssh-agent adiciona apenas uma vez a chave a sessão, ele não vai requerer novamente a senha caso exista, isto pode ser visto como um problema de segurança.</p>
+
+<p>Uma alternativa ao ssh-agent que pouca gente conhece é a associação do host destino a uma chave através do ssh_config, cada usuário tem a opção de criar um ssh_config próprio, para determinar o comportamento do cliente ssh.</p>
+
+<p>Por padrão, o cliente ssh irá buscar a chave no caminho <code>~/.ssh/id_rsa</code> e <code>~/.ssh_dsa</code> para hosts que utilizem a versão 2 do protocolo ssh ou <code>~/.ssh/identity</code> para hosts que utilizem o protocolo 1, para alterar este comportamento definindo um arquivo para cada host, edite ou crie o arquivo <code>~/.ssh/config</code> adicionando as linhas:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host ssh.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>sendo que o arquivo <code>id_rsa-deadc.org</code> é a nossa chave que utilizaremos para acesso o servidor remoto, além de definir uma chave para cada host, é possivel definir também para um grupo de host:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>ou mesmo para todos os hosts:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Você poderá especificar mais de uma chave para cada host, cada chave será enviada para o servidor em sequencia, além disso, caso o ssh-agent esteja rodando e contenha alguma outra chave, ela também será enviada ao host na tentativa de se autenticar com o servidor. leia o <code>man ssh_config</code> para mais opções e informações a respeito.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
+    <updated>2012-10-20T15:11:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
+    <content type="html"><![CDATA[<p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
+
+<p>Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor</p>
+
+<p>Liquid error: ClassNotFound: no lexer for alias 'cnf' found</p>
+
+<p>O <code>expire_logs_days</code> é a quantidade de dias que os bin-logs devem permanecer no servidor antes que sejam deletados, já na primeira linha, indica onde os bin-logs serão salvos, neste caso em <code>/var/lib/mysql</code>, é uma boa idéia separar a pasta onde os arquivos serão salvos caso você deseje realizar o backup incremental.</p>
+
+<pre>
+[root@jazz ~]# ls -la /var/lib/mysql/mysql-bin.*
+-rw-rw---- 1 mysql mysql 27287 Jul 15 15:02 /var/lib/mysql/mysql-bin.000001
+-rw-rw---- 1 mysql mysql 35873 Jul 15 15:02 /var/lib/mysql/mysql-bin.000002
+-rw-rw---- 1 mysql mysql   107 Jul 15 15:03 /var/lib/mysql/mysql-bin.000003
+-rw-rw---- 1 mysql mysql    57 Jul 15 15:03 /var/lib/mysql/mysql-bin.index
+[root@jazz ~]#
+</pre>
+
+
+<p>Embora no diretorio destino exista mais de um binlog, apenas um está ativo no momento, você pode verificar qual e em qual posição o mesmo se encontra executando o seguinte comando:</p>
+
+<pre>
+deadcow@jazz ~ $ mysql -u root -e 'SHOW MASTER STATUS;'
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000003 |      107 |              |                  |
++------------------+----------+--------------+------------------+
+deadcow@jazz ~ $
+</pre>
+
+
+<p>Agora iremos criar uma database para exemplificar o uso do binlog
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span class='line'><span class="n">USE</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;`</span><span class="n">id</span><span class="o">`</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span><span class='line'><span class="o">`</span><span class="n">test_field</span><span class="o">`</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'><span class="o">`</span><span class="n">time_created</span><span class="o">`</span> <span class="k">TIMESTAMP</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
+</span><span class='line'><span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+e então inserir algumas entradas
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">USE</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val1&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val2&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val3&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Agora temos um banco de dados ativo com entradas validas para a realização de um backup, primeiro iremos realizar um full backup em nosso banco</p>
+
+<pre>
+mysqldump -uroot -p --all-databases --single-transaction --flush-logs \
+--master-data=2 > full_backup.sql
+</pre>
+
+
+<p>A flag <code>–flush-logs</code> é utilizada para que o binlog ativo seja fechado e um novo seja criado, <code>–master-data=2</code> adiciona comentários no dump com os indices do binlog, já a flag <code>–single-transaction</code> é utilizada para a realização consistente de dumps de bancos InnoDB, para quem não está familiarizado, uma forma simples de explicar uma transaction é dizer que é um unico comando, caso alguma entrada falhe, o comando inteiro será descartado e nenhuma alteração será feita no banco.</p>
+
+<pre>
+[root@jazz ~]# ls -la /var/lib/mysql/mysql-bin.*
+-rw-rw---- 1 mysql mysql 27287 Jul 15 15:02 /var/lib/mysql/mysql-bin.000001
+-rw-rw---- 1 mysql mysql 35873 Jul 15 15:02 /var/lib/mysql/mysql-bin.000002
+-rw-rw---- 1 mysql mysql  1208 Jul 15 15:13 /var/lib/mysql/mysql-bin.000003
+-rw-rw---- 1 mysql mysql    57 Jul 15 15:03 /var/lib/mysql/mysql-bin.index
+[root@jazz ~]# mysqldump -uroot -p --all-databases --single-transaction \
+> --flush-logs --master-data=2 > full_backup.sql
+Enter password:
+[root@jazz ~]# ls -la /var/lib/mysql/mysql-bin.*
+-rw-rw---- 1 mysql mysql 27287 Jul 15 15:02 /var/lib/mysql/mysql-bin.000001
+-rw-rw---- 1 mysql mysql 35873 Jul 15 15:02 /var/lib/mysql/mysql-bin.000002
+-rw-rw---- 1 mysql mysql  1251 Jul 15 15:26 /var/lib/mysql/mysql-bin.000003
+-rw-rw---- 1 mysql mysql   107 Jul 15 15:26 /var/lib/mysql/mysql-bin.000004
+-rw-rw---- 1 mysql mysql    76 Jul 15 15:26 /var/lib/mysql/mysql-bin.index
+[root@jazz ~]#
+</pre>
+
+
+<p>Agora iremos adicionar algumas entradas novas ao banco para exemplificar o backup incremental
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">USE</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val4&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val5&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">into</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">bk_test_t1</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">test_field</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;val6&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Como realizamos o flush-logs no backup full, as novas entradas devem estar no arquivo mysql-bin.000004, para realizarmos o backup incremental de forma consistente, precisamos iniciar um novo binlog e copiar o arquivo (ou arquivos) para outra localidade, para iniciar um novo binlog execute</p>
+
+<pre>
+[root@jazz ~]# mysqladmin -uroot -p flush-logs
+[root@jazz ~]# ls -la /var/lib/mysql/mysql-bin.*
+-rw-rw---- 1 mysql mysql 27287 Jul 15 15:02 /var/lib/mysql/mysql-bin.000001
+-rw-rw---- 1 mysql mysql 35873 Jul 15 15:02 /var/lib/mysql/mysql-bin.000002
+-rw-rw---- 1 mysql mysql  1251 Jul 15 15:26 /var/lib/mysql/mysql-bin.000003
+-rw-rw---- 1 mysql mysql   885 Jul 15 15:38 /var/lib/mysql/mysql-bin.000004
+-rw-rw---- 1 mysql mysql   107 Jul 15 15:38 /var/lib/mysql/mysql-bin.000005
+-rw-rw---- 1 mysql mysql    95 Jul 15 15:38 /var/lib/mysql/mysql-bin.index
+[root@jazz ~]#
+</pre>
+
+
+<p>Agora temos os componentes para realizar um restore a partir de um backup full e um incremental, nosso banco agora está desta forma</p>
+
+<pre>
+mysql> USER bk_test;
+Database changed
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_bk_test |
++-------------------+
+| bk_test_t1        |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM bk_test_t1;
++----+------------+---------------------+
+| id | test_field | time_created        |
++----+------------+---------------------+
+| 1  | val1       | 2012-07-15 15:13:53 |
+| 2  | val2       | 2012-07-15 15:13:53 |
+| 3  | val3       | 2012-07-15 15:13:54 |
+| 4  | val4       | 2012-07-15 15:33:50 |
+| 5  | val5       | 2012-07-15 15:33:50 |
+| 6  | val6       | 2012-07-15 15:33:52 |
++----+------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+</pre>
+
+
+<p>Digamos agora que acidentalmente a database que utilizamos foi completamente removida</p>
+
+<pre>
+mysql> DROP DATABASE bk_test;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+</pre>
+
+
+<p>Tudo bem! temos o backup full e estamos a salvo certo?!</p>
+
+<pre>
+deadcow@jazz ~ $ mysql -u root < full_backup.sql
+deadcow@jazz ~ $ mysql -u root
+mysql> use bk_test;
+Database changed
+
+mysql> SELECT * FROM bk_test_t1;
++----+------------+---------------------+
+| id | test_field | time_created        |
++----+------------+---------------------+
+| 1  | val1       | 2012-07-15 15:13:53 |
+| 2  | val2       | 2012-07-15 15:13:53 |
+| 3  | val3       | 2012-07-15 15:13:54 |
++----+------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+</pre>
+
+
+<p>Este backup não está completo, havia 6 entradas e agora só existem 3, mas ainda temos o backup incremental de um periodo posterior ao backup full, vamos aplica-lo</p>
+
+<pre>
+[root@jazz ~]# cd /var/lib/mysql/
+[root@jazz mysql]# mysqlbinlog mysql-bin.000004 | mysql -u root bk_test
+[root@jazz mysql]# mysql -u root bk_test
+
+mysql> SELECT * FROM bk_test_t1;
++----+------------+---------------------+
+| id | test_field | time_created        |
++----+------------+---------------------+
+| 1  | val1       | 2012-07-15 15:13:53 |
+| 2  | val2       | 2012-07-15 15:13:53 |
+| 3  | val3       | 2012-07-15 15:13:54 |
+| 4  | val4       | 2012-07-15 15:33:50 |
+| 5  | val5       | 2012-07-15 15:33:50 |
+| 6  | val6       | 2012-07-15 15:33:52 |
++----+------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+</pre>
+
+
+<p>E tudo está recuperado, sem dores de cabeça. a ferramenta <code>mysqlbinlog</code> acompanha o pacote de instalação do <code>mysql-server</code>, ela retorna os comandos do binlog em plaintext e através dela é possivel recuperar o banco de dados, também pode se redirecionar a saida do programa para um arquivo e então editá-lo para excluir queries destrutivas antes de executar no mysql.</p>
+
+<p>Além disso é possivel passar como parametro um periodo especifico de tempo para o mysqlbinlog, é muito util para recuperar pequenas quantidades de entradas perdidas em um banco de dados, desde que se conheca o periodo.</p>
+
+<pre>
+mysqlbinlog --start-datetime="2012-07-15 15:13:53" \ 
+--stop-datetime="2012-07-15 15:13:54" mysql-bin.000004|mysql -uroot bk_test
+</pre>
+
+
+<p>Existem outras dezenas de possibilidades no MySQL que poucas pessoas conhecem, procure blogs, assine feeds e procure crescer profissionalmente através do seu conhecimento, facilite sua vida e a da sua empresa!</p>
+
+<p>Referencias:</p>
+
+<ul>
+<li><a href="http://planet.mysql.com">Planet MySQL</a></li>
+<li><a href="http://www.bytetouch.com/blog/system-administration/mysql-backup-and-point-in-time-recovery-with-binary-logs">Mysql Backup and point in time recovery with-binary logs</a></li>
+<li><a href="http://www.mysqlperformanceblog.com/2012/01/18/backing-up-binary-log-files-with-mysqlbinlog">Backing up binary log files with mysqlbinlog</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby / DL: Acessando funções externas]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
+    <updated>2012-10-20T14:49:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
+    <content type="html"><![CDATA[<p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
+
+<p>Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).</p>
+
+<p>Em casa, consegui escrever 2 scripts para versões distintas e finalmente criar o script para acessar a DLL, o script é tão simples que cheguei seriamente a pensar em não publicar isso, mas como pode ser util para alguém, segue ai!
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>dlopen18.rb  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">dl</span><span class="err">’</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;dl = DL.dlopen(‘libcurl.so’)</span>
+</span><span class='line'><span class="sr">mycall = dl[&quot;curl_version&quot;,&#39;S&#39;]</span>
+</span><span class='line'><span class="sr">puts mycall.call&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+E a versão para Ruby 1.9.2, que é um pouquinho diferente, mas tão facil quanto:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>dlopen19.rb  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">dl</span><span class="err">’</span>
+</span><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">fiddle</span><span class="err">’</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;dl = DL.dlopen(‘libcurl.so’)</span>
+</span><span class='line'><span class="sr">mycall = Fiddle::Function.new(dl[&#39;curl_version&#39;], [], Fiddle::TYPE_VOIDP)</span>
+</span><span class='line'><span class="sr">puts mycall.call&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Lembrando que por conta do uso do Fiddle, este exemplo só funciona no Ruby 1.9.3 ou superior, para ser 100% compativel com 1.9 você deve fazer as modificações necessárias.</p>
+
+<p>Explicando: no primeiro script onde se lê “curl_version” é aonde vai o nome da função externa, que a lib ou dll contém, no segundo campo, é o tipo de entrada da função mais o tipo de retorno, se a função recebesse algum argumento como por exemplo do tipo String e retornasse um Inteiro, ficaria assim:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mycall</span> <span class="o">=</span> <span class="n">dl</span><span class="o">[</span><span class="s2">&quot;funcao&quot;</span><span class="p">,</span><span class="s1">&#39;SI&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">mycall</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="err">“</span><span class="n">string</span><span class="err">”</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+no segundo script isso fica mais claro já que, o retorno fica no final, enquanto os argumentos dentro de um array, que neste caso está vazio já que a função não necessita de nenhum parametro. Mais referencias de como usar e sobre os tipos possiveis de entrada nas funções RTFM</p>
+
+<p>uma dica para quem usa linux e quer saber quais funções determinada lib possui e não tem o código-fonte, é utilizar o comando nm:</p>
+
+<pre>
+deadcow@stack ~ $ nm –defined-only -D /usr/lib/libcurl.so|grep easy
+00000000000297d0 T Curl_easy_addmulti
+0000000000029b40 T Curl_easy_initHandleData
+00000000000319c0 T Curl_multi_rmeasy
+0000000000040270 T Curl_pp_easy_statemach
+0000000000029e30 T curl_easy_cleanup
+0000000000029c00 T curl_easy_duphandle
+0000000000022de0 T curl_easy_escape
+0000000000029e00 T curl_easy_getinfo
+000000000002a0d0 T curl_easy_init
+00000000000299b0 T curl_easy_pause
+0000000000029e50 T curl_easy_perform
+0000000000029930 T curl_easy_recv
+0000000000029b60 T curl_easy_reset
+0000000000029880 T curl_easy_send
+0000000000029f40 T curl_easy_setopt
+0000000000034e30 T curl_easy_strerror
+0000000000022cb0 T curl_easy_unescape
+deadcow@stack ~ $
+</pre>
+
+
+<p>obviamente consultando o oráculo depois para saber mais sobre a função!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Tips: Economizando espaço e tempo]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
+    <updated>2012-10-20T14:42:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
+    <content type="html"><![CDATA[<p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
+
+<pre>
+deadcow@jazz ~ $ mysqldump -u root database | gzip > database.sql.gz
+</pre>
+
+
+<p>e para subir o banco após voce ter transferido para a nova maquina:</p>
+
+<pre>
+deadcow@jazz ~ $ gunzip < database.sql.gz | mysql -u root database
+</pre>
+
+
+<p>isto além de economizar o espaço em disco, aumenta a velocidade na transferência do arquivo já que ele vai ser pelo menos 40% menor que o tamanho original.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RVM install REE/Ruby 1.8.7 with GCC 4.7]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
+    <updated>2012-10-19T03:09:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
+    <content type="html"><![CDATA[<p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):
+<code>
+deadcow@jazz ~ $ gem install bundler
+/home/deadcow/.rvm/rubies/ree-1.8.7-2012.02/lib/ruby/1.8/timeout.rb:60: [BUG] Segmentation fault
+ruby 1.8.7 (2012-02-08 MBARI 8/0x6770 on patchlevel 358) [x86_64-linux], MBARI 0x6770, Ruby Enterprise Edition 2012.02
+</code>
+para resolver é muito simples, faça o seguinte procedimento:
+<code>
+deadcow@jazz ~ $ rvm remove ree
+Removing /home/deadcow/.rvm/src/ree-1.8.7-2012.02...
+Removing /home/deadcow/.rvm/rubies/ree-1.8.7-2012.02...
+Removing ree-1.8.7-2012.02 aliases...
+Removing ree-1.8.7-2012.02 wrappers...
+Removing ree-1.8.7-2012.02 environments...
+Removing ree-1.8.7-2012.02 binaries...
+deadcow@jazz ~ $ export CFLAGS="-O2 -fno-tree-dce -fno-optimize-sibling-calls"
+deadcow@jazz ~ $ rvm install ree
+Installing Ruby Enterprise Edition from source to: /home/deadcow/.rvm/rubies/ree-1.8.7-2012.02
+ree-1.8.7-2012.02 - #fetching (ruby-enterprise-1.8.7-2012.02)
+ree-1.8.7-2012.02 - #extracting ruby-enterprise-1.8.7-2012.02 to /home/deadcow/.rvm/src/ree-1.8.7-2012.02
+Applying patch 'tcmalloc' (located at /home/deadcow/.rvm/patches/ree/1.8.7/tcmalloc.patch)
+Applying patch 'stdout-rouge-fix' (located at /home/deadcow/.rvm/patches/ree/1.8.7/stdout-rouge-fix.patch)
+Applying patch 'no_sslv2' (located at /home/deadcow/.rvm/patches/ree/1.8.7/no_sslv2.diff)
+Applying patch 'lib64' (located at /home/deadcow/.rvm/patches/ree/lib64.patch)
+ree-1.8.7-2012.02 - #installing
+Removing old Rubygems files...
+Installing rubygems-1.8.24 for ree-1.8.7-2012.02 ...
+Installation of rubygems completed successfully.
+ree-1.8.7-2012.02 - #importing default gemsets (/home/deadcow/.rvm/gemsets/)
+deadcow@jazz ~ $ gem install bundler
+Fetching: bundler-1.2.1.gem (100%)
+Successfully installed bundler-1.2.1
+1 gem installed
+Installing ri documentation for bundler-1.2.1...
+Installing RDoc documentation for bundler-1.2.1...
+deadcow@jazz ~ $
+</code>
+e é isso</p>
+]]></content>
+  </entry>
+  
+</feed>

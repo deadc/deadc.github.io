@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: config | bloated]]></title>
+  <link href="http://deadc.github.com/blog/categories/config/atom.xml" rel="self"/>
+  <link href="http://deadc.github.com/"/>
+  <updated>2012-10-20T19:15:56-03:00</updated>
+  <id>http://deadc.github.com/</id>
+  <author>
+    <name><![CDATA[deadc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SSH Tips: ssh-agent vs. ssh_config]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
+    <updated>2012-10-20T18:17:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
+    <content type="html"><![CDATA[<p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
+
+<p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
+
+<p>O problema é que nem todas as distribuições oferecem ele como pacote padrão, além disso, o ssh-agent adiciona apenas uma vez a chave a sessão, ele não vai requerer novamente a senha caso exista, isto pode ser visto como um problema de segurança.</p>
+
+<p>Uma alternativa ao ssh-agent que pouca gente conhece é a associação do host destino a uma chave através do ssh_config, cada usuário tem a opção de criar um ssh_config próprio, para determinar o comportamento do cliente ssh.</p>
+
+<p>Por padrão, o cliente ssh irá buscar a chave no caminho <code>~/.ssh/id_rsa</code> e <code>~/.ssh_dsa</code> para hosts que utilizem a versão 2 do protocolo ssh ou <code>~/.ssh/identity</code> para hosts que utilizem o protocolo 1, para alterar este comportamento definindo um arquivo para cada host, edite ou crie o arquivo <code>~/.ssh/config</code> adicionando as linhas:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host ssh.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>sendo que o arquivo <code>id_rsa-deadc.org</code> é a nossa chave que utilizaremos para acesso o servidor remoto, além de definir uma chave para cada host, é possivel definir também para um grupo de host:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>ou mesmo para todos os hosts:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Você poderá especificar mais de uma chave para cada host, cada chave será enviada para o servidor em sequencia, além disso, caso o ssh-agent esteja rodando e contenha alguma outra chave, ela também será enviada ao host na tentativa de se autenticar com o servidor. leia o <code>man ssh_config</code> para mais opções e informações a respeito.</p>
+]]></content>
+  </entry>
+  
+</feed>

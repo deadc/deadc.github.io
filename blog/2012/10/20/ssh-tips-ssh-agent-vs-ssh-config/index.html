@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SSH Tips: ssh-agent vs. ssh_config - bloated</title>
+  <meta name="author" content="deadc">
+
+  
+  <meta name="description" content="Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bloated" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">deadc</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">bloated</a></h1>
+  
+    <h2>nobody cares</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:deadc.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">SSH Tips: Ssh-agent vs. Ssh_config</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-20T18:17:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
+
+<p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
+
+<p>O problema é que nem todas as distribuições oferecem ele como pacote padrão, além disso, o ssh-agent adiciona apenas uma vez a chave a sessão, ele não vai requerer novamente a senha caso exista, isto pode ser visto como um problema de segurança.</p>
+
+<p>Uma alternativa ao ssh-agent que pouca gente conhece é a associação do host destino a uma chave através do ssh_config, cada usuário tem a opção de criar um ssh_config próprio, para determinar o comportamento do cliente ssh.</p>
+
+<p>Por padrão, o cliente ssh irá buscar a chave no caminho <code>~/.ssh/id_rsa</code> e <code>~/.ssh_dsa</code> para hosts que utilizem a versão 2 do protocolo ssh ou <code>~/.ssh/identity</code> para hosts que utilizem o protocolo 1, para alterar este comportamento definindo um arquivo para cada host, edite ou crie o arquivo <code>~/.ssh/config</code> adicionando as linhas:</p>
+
+<figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host ssh.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure>
+
+
+<p>sendo que o arquivo <code>id_rsa-deadc.org</code> é a nossa chave que utilizaremos para acesso o servidor remoto, além de definir uma chave para cada host, é possivel definir também para um grupo de host:</p>
+
+<figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *.deadc.org
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ou mesmo para todos os hosts:</p>
+
+<figure class='code'><figcaption><span>~/.ssh/config </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host *
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa-deadc.org</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Você poderá especificar mais de uma chave para cada host, cada chave será enviada para o servidor em sequencia, além disso, caso o ssh-agent esteja rodando e contenha alguma outra chave, ela também será enviada ao host na tentativa de se autenticar com o servidor. leia o <code>man ssh_config</code> para mais opções e informações a respeito.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">deadc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-20T18:17:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/config/'>config</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/ssh/'>ssh</a>, <a class='category' href='/blog/categories/sysadmin/'>sysadmin</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/" data-via="deadc" data-counturl="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/" title="Previous Post: MySQL: Binlogs Backup full e incremental">&laquo; MySQL: Binlogs Backup full e incremental</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">SSH Tips: ssh-agent vs. ssh_config</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/">MySQL: Binlogs Backup full e incremental</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/">Ruby / DL: Acessando funções externas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/">MySQL Tips: Economizando espaço e tempo</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/">RVM install REE/Ruby 1.8.7 with GCC 4.7</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/deadc">@deadc</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'deadc',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("deadc", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/deadc" class="twitter-follow-button" data-show-count="false">Follow @deadc</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - deadc -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MySQL Tips: Economizando espaço e tempo - bloated</title>
+  <meta name="author" content="deadc">
+
+  
+  <meta name="description" content="Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bloated" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">deadc</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">bloated</a></h1>
+  
+    <h2>nobody cares</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:deadc.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">MySQL Tips: Economizando Espaço E Tempo</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-20T14:42:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
+
+<pre>
+deadcow@jazz ~ $ mysqldump -u root database | gzip > database.sql.gz
+</pre>
+
+
+<p>e para subir o banco após voce ter transferido para a nova maquina:</p>
+
+<pre>
+deadcow@jazz ~ $ gunzip < database.sql.gz | mysql -u root database
+</pre>
+
+
+<p>isto além de economizar o espaço em disco, aumenta a velocidade na transferência do arquivo já que ele vai ser pelo menos 40% menor que o tamanho original.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">deadc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-20T14:42:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gzip/'>gzip</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/mysql/'>mysql</a>, <a class='category' href='/blog/categories/tips/'>tips</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/" data-via="deadc" data-counturl="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/" title="Previous Post: RVM install REE/Ruby 1.8.7 with GCC 4.7">&laquo; RVM install REE/Ruby 1.8.7 with GCC 4.7</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/" title="Next Post: Ruby / DL: Acessando funções externas">Ruby / DL: Acessando funções externas &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">SSH Tips: ssh-agent vs. ssh_config</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/">MySQL: Binlogs Backup full e incremental</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/">Ruby / DL: Acessando funções externas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/">MySQL Tips: Economizando espaço e tempo</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/">RVM install REE/Ruby 1.8.7 with GCC 4.7</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/deadc">@deadc</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'deadc',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("deadc", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/deadc" class="twitter-follow-button" data-show-count="false">Follow @deadc</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - deadc -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

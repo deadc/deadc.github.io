@@ -1,109 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>bloated</title>
-  <meta name="author" content="deadc">
-
-  
-  <meta name="description" content="Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://deadc.github.com/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="bloated" type="application/atom+xml">
-  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <div id="logo">
-  	<div id="logoLeft">{</div>
-  	<div id="logoText">deadc</div>
-  	<div id="logoRight">}</div>
-  	<div class="clear"></div>
-  </div>
-  <h1><a href="/">bloated</a></h1>
-  
-    <h2>nobody cares</h2>
-  
-  <div class="clear"></div>
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:deadc.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[bloated]]></title>
+  <link href="http://deadc.github.com/atom.xml" rel="self"/>
+  <link href="http://deadc.github.com/"/>
+  <updated>2012-10-20T19:15:56-03:00</updated>
+  <id>http://deadc.github.com/</id>
+  <author>
+    <name><![CDATA[deadc]]></name>
     
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">SSH Tips: Ssh-agent vs. Ssh_config</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2012-10-20T18:17:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
+  <entry>
+    <title type="html"><![CDATA[SSH Tips: ssh-agent vs. ssh_config]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
+    <updated>2012-10-20T18:17:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
+    <content type="html"><![CDATA[<p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
 
 <p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
 
@@ -139,44 +54,15 @@
 
 
 <p>Você poderá especificar mais de uma chave para cada host, cada chave será enviada para o servidor em sequencia, além disso, caso o ssh-agent esteja rodando e contenha alguma outra chave, ela também será enviada ao host na tentativa de se autenticar com o servidor. leia o <code>man ssh_config</code> para mais opções e informações a respeito.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/">MySQL: Binlogs Backup Full E Incremental</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-20T15:11:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
+  <entry>
+    <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
+    <updated>2012-10-20T15:11:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
+    <content type="html"><![CDATA[<p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
 
 <p>Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor</p>
 
@@ -421,44 +307,15 @@ mysqlbinlog --start-datetime="2012-07-15 15:13:53" \
 <li><a href="http://www.mysqlperformanceblog.com/2012/01/18/backing-up-binary-log-files-with-mysqlbinlog">Backing up binary log files with mysqlbinlog</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/">Ruby / DL: Acessando Funções Externas</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-20T14:49:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
+  <entry>
+    <title type="html"><![CDATA[Ruby / DL: Acessando funções externas]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
+    <updated>2012-10-20T14:49:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
+    <content type="html"><![CDATA[<p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
 
 <p>Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).</p>
 
@@ -535,44 +392,15 @@ deadcow@stack ~ $
 
 
 <p>obviamente consultando o oráculo depois para saber mais sobre a função!</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/">MySQL Tips: Economizando Espaço E Tempo</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-20T14:42:00-03:00" pubdate data-updated="true">Oct 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
+  <entry>
+    <title type="html"><![CDATA[MySQL Tips: Economizando espaço e tempo]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
+    <updated>2012-10-20T14:42:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
+    <content type="html"><![CDATA[<p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
 
 <pre>
 deadcow@jazz ~ $ mysqldump -u root database | gzip > database.sql.gz
@@ -587,44 +415,15 @@ deadcow@jazz ~ $ gunzip < database.sql.gz | mysql -u root database
 
 
 <p>isto além de economizar o espaço em disco, aumenta a velocidade na transferência do arquivo já que ele vai ser pelo menos 40% menor que o tamanho original.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/">RVM Install REE/Ruby 1.8.7 With GCC 4.7</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-19T03:09:00-03:00" pubdate data-updated="true">Oct 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):</p>
+  <entry>
+    <title type="html"><![CDATA[RVM install REE/Ruby 1.8.7 with GCC 4.7]]></title>
+    <link href="http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
+    <updated>2012-10-19T03:09:00-03:00</updated>
+    <id>http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
+    <content type="html"><![CDATA[<p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -695,130 +494,7 @@ deadcow@jazz ~ $ gunzip < database.sql.gz | mysql -u root database
 
 
 <p>e é isso</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">SSH Tips: ssh-agent vs. ssh_config</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/">MySQL: Binlogs Backup full e incremental</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/">Ruby / DL: Acessando funções externas</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/">MySQL Tips: Economizando espaço e tempo</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/">RVM install REE/Ruby 1.8.7 with GCC 4.7</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/deadc">@deadc</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'deadc',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-<section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("deadc", 4, false);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/deadc" class="twitter-follow-button" data-show-count="false">Follow @deadc</a>
-  
-</section>
-
-
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - deadc -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+</feed>
