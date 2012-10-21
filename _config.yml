@@ -93,7 +93,7 @@ disqus_short_name: deadc
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-35750231-1
 
 # Facebook Like
 facebook_like: true
