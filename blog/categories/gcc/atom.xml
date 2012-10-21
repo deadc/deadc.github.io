@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: gcc | The Abigail Oath]]></title>
-  <link href="http://deadc.github.com/blog/categories/gcc/atom.xml" rel="self"/>
-  <link href="http://deadc.github.com/"/>
-  <updated>2012-10-21T17:17:34-02:00</updated>
-  <id>http://deadc.github.com/</id>
+  <link href="http://deadc.org/blog/categories/gcc/atom.xml" rel="self"/>
+  <link href="http://deadc.org/"/>
+  <updated>2012-10-21T17:27:22-02:00</updated>
+  <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[RVM install REE/Ruby 1.8.7 with GCC 4.7]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
+    <link href="http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
     <updated>2012-10-19T03:09:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
+    <id>http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
     <content type="html"><![CDATA[<p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):
 <code>
 deadcow@jazz ~ $ gem install bundler

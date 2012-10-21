@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mysqlbinlog | The Abigail Oath]]></title>
-  <link href="http://deadc.github.com/blog/categories/mysqlbinlog/atom.xml" rel="self"/>
-  <link href="http://deadc.github.com/"/>
-  <updated>2012-10-21T17:17:34-02:00</updated>
-  <id>http://deadc.github.com/</id>
+  <link href="http://deadc.org/blog/categories/mysqlbinlog/atom.xml" rel="self"/>
+  <link href="http://deadc.org/"/>
+  <updated>2012-10-21T17:27:22-02:00</updated>
+  <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
+    <link href="http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
     <updated>2012-10-20T15:11:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
+    <id>http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
     <content type="html"><![CDATA[<p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
 
 <p>Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor</p>

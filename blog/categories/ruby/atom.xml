@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ruby | The Abigail Oath]]></title>
-  <link href="http://deadc.github.com/blog/categories/ruby/atom.xml" rel="self"/>
-  <link href="http://deadc.github.com/"/>
-  <updated>2012-10-21T17:17:34-02:00</updated>
-  <id>http://deadc.github.com/</id>
+  <link href="http://deadc.org/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://deadc.org/"/>
+  <updated>2012-10-21T17:27:22-02:00</updated>
+  <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ruby / DL: Acessando funções externas]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
+    <link href="http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
     <updated>2012-10-20T14:49:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
+    <id>http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
     <content type="html"><![CDATA[<p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
 
 <p>Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).</p>
@@ -99,9 +99,9 @@ deadcow@stack ~ $
   
   <entry>
     <title type="html"><![CDATA[RVM install REE/Ruby 1.8.7 with GCC 4.7]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
+    <link href="http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
     <updated>2012-10-19T03:09:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
+    <id>http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
     <content type="html"><![CDATA[<p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):
 <code>
 deadcow@jazz ~ $ gem install bundler

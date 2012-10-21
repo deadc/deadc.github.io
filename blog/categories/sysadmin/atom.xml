@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: sysadmin | The Abigail Oath]]></title>
-  <link href="http://deadc.github.com/blog/categories/sysadmin/atom.xml" rel="self"/>
-  <link href="http://deadc.github.com/"/>
-  <updated>2012-10-21T17:17:34-02:00</updated>
-  <id>http://deadc.github.com/</id>
+  <link href="http://deadc.org/blog/categories/sysadmin/atom.xml" rel="self"/>
+  <link href="http://deadc.org/"/>
+  <updated>2012-10-21T17:27:22-02:00</updated>
+  <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
     
@@ -15,18 +15,18 @@
   
   <entry>
     <title type="html"><![CDATA[The Abigail Oath]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/21/the-abigail-oath/"/>
+    <link href="http://deadc.org/blog/2012/10/21/the-abigail-oath/"/>
     <updated>2012-10-21T15:55:00-02:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/21/the-abigail-oath</id>
+    <id>http://deadc.org/blog/2012/10/21/the-abigail-oath</id>
     <content type="html"><![CDATA[<p><blockquote><p></p></p><p><p>I am hired because I know what I am doing, not because I will do whatever I am told is a good idea.</p></p><p><p>This might cost me bonuses, raises, promotions, and may even label me as "undesirable" by places I don’t want to work at anyway, but I don’t care.</p></p><p><p>I will not compromise my own principles and judgement without putting up a fight.</p></p><p><p>Of course, I won’t always win, and I will sometimes be forced to do things I don’t agree with. My objections will be made known.</p></p><p><p>If I am shown to be right and problems later develop, I will shout "I told you so!" repeatedly, laugh hysterically, and do a small dance or jig as appropriate to my heritage.</p></p><p><p></p><footer><strong>Mike Sphar</strong> <cite><a href='http://groups.google.com/group/alt.sysadmin.recovery/msg/1d05c6aa3681e609?output=gplain'>Re: Abigail's Resignation Letter</a></cite></footer></blockquote></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[SSH Tips: ssh-agent vs. ssh_config]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
+    <link href="http://deadc.org/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
     <updated>2012-10-20T18:17:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
+    <id>http://deadc.org/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
     <content type="html"><![CDATA[<p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
 
 <p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
@@ -65,9 +65,9 @@
   
   <entry>
     <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
+    <link href="http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
     <updated>2012-10-20T15:11:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
+    <id>http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
     <content type="html"><![CDATA[<p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
 
 <p>Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor</p>
@@ -310,9 +310,9 @@ mysqlbinlog --start-datetime="2012-07-15 15:13:53" \
   
   <entry>
     <title type="html"><![CDATA[MySQL Tips: Economizando espaço e tempo]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
+    <link href="http://deadc.org/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
     <updated>2012-10-20T14:42:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
+    <id>http://deadc.org/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
     <content type="html"><![CDATA[<p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
 
 <pre>

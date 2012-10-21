@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[The Abigail Oath]]></title>
-  <link href="http://deadc.github.com/atom.xml" rel="self"/>
-  <link href="http://deadc.github.com/"/>
-  <updated>2012-10-21T17:17:34-02:00</updated>
-  <id>http://deadc.github.com/</id>
+  <link href="http://deadc.org/atom.xml" rel="self"/>
+  <link href="http://deadc.org/"/>
+  <updated>2012-10-21T17:27:22-02:00</updated>
+  <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Abigail Oath]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/21/the-abigail-oath/"/>
+    <link href="http://deadc.org/blog/2012/10/21/the-abigail-oath/"/>
     <updated>2012-10-21T15:55:00-02:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/21/the-abigail-oath</id>
+    <id>http://deadc.org/blog/2012/10/21/the-abigail-oath</id>
     <content type="html"><![CDATA[<blockquote><p>I am hired because I know what I am doing, not because I will do whatever I am told is a good idea.</p><p>This might cost me bonuses, raises, promotions, and may even label me as &#8220;undesirable&#8221; by places I don’t want to work at anyway, but I don’t care.</p><p>I will not compromise my own principles and judgement without putting up a fight.</p><p>Of course, I won’t always win, and I will sometimes be forced to do things I don’t agree with. My objections will be made known.</p><p>If I am shown to be right and problems later develop, I will shout &#8220;I told you so!&#8221; repeatedly, laugh hysterically, and do a small dance or jig as appropriate to my heritage.</p><footer><strong>Mike Sphar</strong> <cite><a href='http://groups.google.com/group/alt.sysadmin.recovery/msg/1d05c6aa3681e609?output=gplain'>Re: Abigail&#8217;s Resignation Letter</a></cite></footer></blockquote>
 
 ]]></content>
@@ -25,9 +25,9 @@
   
   <entry>
     <title type="html"><![CDATA[SSH Tips: ssh-agent vs. ssh_config]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
+    <link href="http://deadc.org/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/"/>
     <updated>2012-10-20T18:17:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
+    <id>http://deadc.org/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config</id>
     <content type="html"><![CDATA[<p>Muitas vezes utilizamos chaves privadas para acessar servidores remotos via ssh, principalmente agora com a utilização de autenticações somente por chave como por exemplo a Engine Yard, que roda em cima do PaaS da amazon (AWS).</p>
 
 <p>A maioria das pessoas costuma utilizar o <code>ssh-agent</code> como gerenciador dessas chaves, quase todos os tutoriais passo-a-passo a respeito de acesso remoto via ssh sem a utilização de senhas mencionam ele.</p>
@@ -69,9 +69,9 @@
   
   <entry>
     <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
+    <link href="http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental/"/>
     <updated>2012-10-20T15:11:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
+    <id>http://deadc.org/blog/2012/10/20/mysql-binlogs-backup-full-e-incremental</id>
     <content type="html"><![CDATA[<p>Mysql binlogs são logs de todos os comandos enviados para o mysql, ele captura todos os comandos executados, desde um simples INSERT até um DROP DATABASE e insere indices atraves de datas e numeros sequenciais. É uma ferramenta muito poderosa, utilizada na replicação de banco de dados e também na realização de backups incrementais.</p>
 
 <p>Por padrão, diversas distribuições linux deixam essa opção desabilitada nos pacotes tradicionais do mysql-server, se este for o caso da sua instalação, habilite o binlog no seu servidor</p>
@@ -322,9 +322,9 @@ mysqlbinlog --start-datetime="2012-07-15 15:13:53" \
   
   <entry>
     <title type="html"><![CDATA[Ruby / DL: Acessando funções externas]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
+    <link href="http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
     <updated>2012-10-20T14:49:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
+    <id>http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
     <content type="html"><![CDATA[<p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
 
 <p>Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).</p>
@@ -407,9 +407,9 @@ deadcow@stack ~ $
   
   <entry>
     <title type="html"><![CDATA[MySQL Tips: Economizando espaço e tempo]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
+    <link href="http://deadc.org/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo/"/>
     <updated>2012-10-20T14:42:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
+    <id>http://deadc.org/blog/2012/10/20/mysql-tips-economizando-espaco-e-tempo</id>
     <content type="html"><![CDATA[<p>Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:</p>
 
 <pre>
@@ -430,9 +430,9 @@ deadcow@jazz ~ $ gunzip < database.sql.gz | mysql -u root database
   
   <entry>
     <title type="html"><![CDATA[RVM install REE/Ruby 1.8.7 with GCC 4.7]]></title>
-    <link href="http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
+    <link href="http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7/"/>
     <updated>2012-10-19T03:09:00-03:00</updated>
-    <id>http://deadc.github.com/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
+    <id>http://deadc.org/blog/2012/10/19/rvm-install-ruby-1-dot-8-7-with-gcc-4-dot-7</id>
     <content type="html"><![CDATA[<p>Na instalação do ree/ruby 1.8.7 pelo RVM nas versões mais novas do gcc (estou utilizando a versão 4.7.2), o seguinte erro é apresentado quando você tenta rodar <code>gem install bundler</code> (não somente este comando, mas alguns outros também):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
