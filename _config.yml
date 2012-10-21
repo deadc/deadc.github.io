@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://deadc.github.com
+url: http://deadc.org
 title: The Abigail Oath
 subtitle: We'll call it "The Abigail Oath" and require all new sysadmins to swear it.
 author: deadc
@@ -50,7 +50,7 @@ default_asides: [ custom/asides/aboutmetwitter.html, asides/recent_posts.html, a
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
 # blog_index_asides:
-post_asides: [ disqus.html ]
+# post_asides: [ disqus.html ]
 # page_asides:
 
 # ----------------------- #
