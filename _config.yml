@@ -50,7 +50,7 @@ default_asides: [ custom/asides/aboutmetwitter.html, asides/recent_posts.html, a
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
 # blog_index_asides:
-# post_asides: [ disqus.html ]
+# post_asides:
 # page_asides:
 
 # ----------------------- #
@@ -72,7 +72,7 @@ twitter_show_follower_count: false
 twitter_tweet_button: true
 
 # Google +1
-google_plus_one: false
+google_plus_one: true
 google_plus_one_size: medium
 
 # Google Plus Profile
@@ -96,4 +96,4 @@ disqus_show_comment_count: true
 google_analytics_tracking_id:
 
 # Facebook Like
-facebook_like: false
+facebook_like: true
