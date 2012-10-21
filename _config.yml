@@ -50,7 +50,7 @@ default_asides: [ custom/asides/aboutmetwitter.html, asides/recent_posts.html, a
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
 # blog_index_asides:
-# post_asides:
+post_asides: [ disqus.html ]
 # page_asides:
 
 # ----------------------- #
