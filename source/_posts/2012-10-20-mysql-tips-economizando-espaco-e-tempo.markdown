@@ -3,7 +3,7 @@ layout: post
 title: "MySQL Tips: Economizando espaço e tempo"
 date: 2012-10-20 14:42
 comments: true
-categories: [linux,mysql,tips,gzip]
+categories: [linux,mysql,tips,gzip,sysadmin]
 ---
 
 Quando faltar espaço em HD ou a transferência de dados de um ponto ao outro não ser 100/100mbit, voce pode realizar a migração do seu banco de dados da seguinte maneira:
