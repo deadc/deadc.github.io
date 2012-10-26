@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: config - The Abigail Oath</title>
+  <title>O mod_gzip está funcionando? - The Abigail Oath</title>
   <meta name="author" content="deadc">
 
   
-  <meta name="description" content="Category: config">
+  <meta name="description" content="Um jeito simples de verificar se seu site está realmente enviando paginas comprimidas para o cliente, sem ter que instalar um plugin no seu browser é &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://deadc.orgblog/categories/config/">
+  <link rel="canonical" href="http://deadc.org/blog/2012/10/26/o-mod-gzip-esta-funcionando/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -83,36 +83,172 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Config</h1>
+    
+      
+        <h1 class="entry-title">O Mod_gzip Está Funcionando?</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-26T17:58:00-02:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Um jeito simples de verificar se seu site está realmente enviando paginas comprimidas para o cliente, sem ter que instalar um plugin no seu browser é utilizar o parametro <code>--header</code> do wget.</p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/10/20/ssh-tips-ssh-agent-vs-ssh-config/">SSH Tips: ssh-agent vs. ssh_config</a></h1>
-<time datetime="2012-10-20T18:17:00-03:00" pubdate><span class='month'>Oct</span> <span class='day'>20</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/config/'>config</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/ssh/'>ssh</a>, <a class='category' href='/blog/categories/sysadmin/'>sysadmin</a></span>
-</footer>
+<blockquote><p>&#8211;header=header-line<br/>    Send header-line along with the rest of the headers in each HTTP request.  The supplied header is sent as-is, which means it must contain name and value separated by colon, and must not contain newlines.</p><footer><strong>man wget</strong> <cite>Retirado Do Manual Pages</cite></footer></blockquote>
 
 
-</article>
+<p>Passando ao parametro <code>--header</code> do wget <code>Accept-Encoding: gzip</code> é possivel baixar a página comprimida, claro se o servidor tiver esta opção</p>
 
+<pre>
+deadcow@jazz ~ $ wget --header='Accept-Encoding: gzip' \
+http://www.uol.com.br -O sample.gz
+--2012-10-26 18:07:56--  http://www.uol.com.br/
+Resolving www.uol.com.br... 200.221.2.45, 200.147.67.142
+Connecting to www.uol.com.br|200.221.2.45|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘sample.gz’
+
+    [  <=>                               ] 86,339       211KB/s   in 0.4s
+
+2012-10-26 18:07:57 (211 KB/s) - ‘sample.gz’ saved [86339]
+
+deadcow@jazz ~ $ file sample.gz
+sample.gz: gzip compressed data, from Unix
+deadcow@jazz ~ $
+</pre>
+
+
+<p>Já se o servidor não oferece este recurso, o comando <code>file</code> retornará uma página html normal</p>
+
+<pre>
+deadcow@jazz ~ $ wget --header='Accept-Encoding: gzip' \
+http://www.blunt.com.br -O sample.gz
+--2012-10-26 18:08:17--  http://www.blunt.com.br/
+Resolving www.blunt.com.br... 216.14.115.179
+Connecting to www.blunt.com.br|216.14.115.179|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘sample.gz’
+
+    [     <=>                            ] 45,874      53.6KB/s   in 0.8s
+
+2012-10-26 18:08:19 (53.6 KB/s) - ‘sample.gz’ saved [45874]
+
+deadcow@jazz ~ $ file sample.gz
+sample.gz: HTML document, ISO-8859 text, with very long lines, \
+with CR, LF line terminators
+deadcow@jazz ~ $
+</pre>
+
+
+<p>Além do <code>Accept-Encoding: gzip</code>, você pode passar qualquer parametro para o servidor, substituindo os valores padrões do wget, muito util para testar alguns redirecionamentos</p>
+
+<pre>
+deadcow@jazz ~ $ wget --header='Host: ig.com.br' \
+http://www.uol.com.br
+--2012-10-26 18:14:45--  http://www.uol.com.br/
+Resolving www.uol.com.br... 200.221.2.45, 200.147.67.142
+Connecting to www.uol.com.br|200.221.2.45|:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://www.uol.com.br/ [following]
+[...]
+Connecting to www.uol.com.br|200.221.2.45|:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://www.uol.com.br/ [following]
+--2012-10-26 18:14:47--  http://www.uol.com.br/
+Connecting to www.uol.com.br|200.221.2.45|:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: http://www.uol.com.br/ [following]
+20 redirections exceeded.
+deadcow@jazz ~ $
+</pre>
+
+
+<p>Dica retirada do site <a href="http://www.cyberciti.biz/faq/unix-linux-wget-download-compressed-gzip-headers">nixcraft</a></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">deadc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-26T17:58:00-02:00" pubdate data-updated="true">Oct 26<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gzip/'>gzip</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/sysadmin/'>sysadmin</a>, <a class='category' href='/blog/categories/wget/'>wget</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://deadc.org/blog/2012/10/26/o-mod-gzip-esta-funcionando/" data-via="deadc" data-counturl="http://deadc.org/blog/2012/10/26/o-mod-gzip-esta-funcionando/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2012/10/21/the-abigail-oath/" title="Previous Post: The Abigail Oath">&laquo; The Abigail Oath</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -250,7 +386,10 @@
       var disqus_shortname = 'deadc';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://deadc.org/blog/2012/10/26/o-mod-gzip-esta-funcionando/';
+        var disqus_url = 'http://deadc.org/blog/2012/10/26/o-mod-gzip-esta-funcionando/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
