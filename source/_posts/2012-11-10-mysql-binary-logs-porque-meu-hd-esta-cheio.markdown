@@ -20,9 +20,12 @@ Este comando na verdade não desabilita o binlogs e sim, ignora INSERTs, DDLs, U
 Caso você faça uso dos binlogs, você ainda pode definir um tamanho e qual a frequencia de criação destes arquivos, ajustando de acordo com a necessidade do uso, utilizando as flags:
 
 * __max_binlog_size__: que define qual tamanho maximo do arquivo em kilobytes. quando atingir este valor será criado um novo arquivo sequencial no formato nome-do-arquivo.XXXXXX
+
 * __expire_logs_days__: que define de quanto em quanto dias os binlogs serão removidos, recomenda-se utilizar o periodo minimo de 10 dias, dependendo do atraso entre o master e slave quando existir a replicação de bancos.
+
 * __binlog-ignore-db__: que especifica quais databases podem ser ignoradas pelo binlog.
-* __binlog-do-db__: que especifica quais databases devem ser monitoradas pelo binlog, tanto esta flag quanto a de cima interferem diretamente nas replicações de banco de dados.
+
+* __binlog-do-db__: que especifica quais databases devem ser monitoradas e os comandos salvos no binlog.
 
 Feita a configuração, e tendo certeza que os binlogs armazenados não são mais necessários, você poderá excluir todos os binlogs através do comando
 <pre>
