@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sysadmin | The Abigail Oath]]></title>
   <link href="http://deadc.org/blog/categories/sysadmin/atom.xml" rel="self"/>
   <link href="http://deadc.org/"/>
-  <updated>2012-11-10T16:01:22-02:00</updated>
+  <updated>2012-11-10T16:04:36-02:00</updated>
   <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
@@ -35,10 +35,10 @@ Query OK, 0 rows affected (0.00 sec)
 <p>Caso você faça uso dos binlogs, você ainda pode definir um tamanho e qual a frequencia de criação destes arquivos, ajustando de acordo com a necessidade do uso, utilizando as flags:</p>
 
 <ul>
-<li><strong>max_binlog_size</strong>: que define qual tamanho maximo do arquivo em kilobytes. quando atingir este valor será criado um novo arquivo sequencial no formato nome-do-arquivo.XXXXXX</li>
-<li><strong>expire_logs_days</strong>: que define de quanto em quanto dias os binlogs serão removidos, recomenda-se utilizar o periodo minimo de 10 dias, dependendo do atraso entre o master e slave quando existir a replicação de bancos.</li>
-<li><strong>binlog-ignore-db</strong>: que especifica quais databases podem ser ignoradas pelo binlog.</li>
-<li><strong>binlog-do-db</strong>: que especifica quais databases devem ser monitoradas pelo binlog, tanto esta flag quanto a de cima interferem diretamente nas replicações de banco de dados.</li>
+<li><p><strong>max_binlog_size</strong>: que define qual tamanho maximo do arquivo em kilobytes. quando atingir este valor será criado um novo arquivo sequencial no formato nome-do-arquivo.XXXXXX</p></li>
+<li><p><strong>expire_logs_days</strong>: que define de quanto em quanto dias os binlogs serão removidos, recomenda-se utilizar o periodo minimo de 10 dias, dependendo do atraso entre o master e slave quando existir a replicação de bancos.</p></li>
+<li><p><strong>binlog-ignore-db</strong>: que especifica quais databases podem ser ignoradas pelo binlog.</p></li>
+<li><p><strong>binlog-do-db</strong>: que especifica quais databases devem ser monitoradas e os comandos salvos no binlog.</p></li>
 </ul>
 
 
