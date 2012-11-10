@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | The Abigail Oath]]></title>
   <link href="http://deadc.org/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://deadc.org/"/>
-  <updated>2012-11-07T01:01:57-02:00</updated>
+  <updated>2012-11-10T16:01:22-02:00</updated>
   <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Binary Logs: porque meu HD está cheio?]]></title>
+    <link href="http://deadc.org/blog/2012/11/10/mysql-binary-logs-porque-meu-hd-esta-cheio/"/>
+    <updated>2012-11-10T14:34:00-02:00</updated>
+    <id>http://deadc.org/blog/2012/11/10/mysql-binary-logs-porque-meu-hd-esta-cheio</id>
+    <content type="html"><![CDATA[<p>Se o diretório onde está alocado os arquivos data de seu MySQL está crescendo mais que o normal, possivelmente você está tendo problemas com a configuração quanto a flag que determina o uso dos binlogs.</p>
+
+<p>Binlogs em sua essência são utilizados para realizar a replicação de bancos de dados e em algumas ocasiões te salvar quando algum dado é perdido, se você não realiza a replicação e tampouco se preocupa com o armazenamento dos binlogs, não existe sentido manter essa configuração.</p>
+
+<p>Para desabilitar esta opção, comente a linha no seu <code>/etc/mysql/my.cnf</code> que diz <code>log-bin=mysql-bin</code> onde define que os binlogs devem ser criados e indica qual nome dos arquivos. Você ainda pode parar a geração dos binlogs <em>on-the-fly</em> utilizando o seguinte comando como usuario <strong>root</strong></p>
+
+<pre>
+mysql> SET GLOBAL SQL_LOG_BIN=0;
+Query OK, 0 rows affected (0.00 sec)
+</pre>
+
+
+<p>Este comando na verdade não desabilita o binlogs e sim, ignora INSERTs, DDLs, UPDATEs, e DELETEs, para que a alteração seja permanente você ainda terá que editar o <code>/etc/mysql/my.cnf</code>.</p>
+
+<p>Caso você faça uso dos binlogs, você ainda pode definir um tamanho e qual a frequencia de criação destes arquivos, ajustando de acordo com a necessidade do uso, utilizando as flags:</p>
+
+<ul>
+<li><strong>max_binlog_size</strong>: que define qual tamanho maximo do arquivo em kilobytes. quando atingir este valor será criado um novo arquivo sequencial no formato nome-do-arquivo.XXXXXX</li>
+<li><strong>expire_logs_days</strong>: que define de quanto em quanto dias os binlogs serão removidos, recomenda-se utilizar o periodo minimo de 10 dias, dependendo do atraso entre o master e slave quando existir a replicação de bancos.</li>
+<li><strong>binlog-ignore-db</strong>: que especifica quais databases podem ser ignoradas pelo binlog.</li>
+<li><strong>binlog-do-db</strong>: que especifica quais databases devem ser monitoradas pelo binlog, tanto esta flag quanto a de cima interferem diretamente nas replicações de banco de dados.</li>
+</ul>
+
+
+<p>Feita a configuração, e tendo certeza que os binlogs armazenados não são mais necessários, você poderá excluir todos os binlogs através do comando</p>
+
+<pre>
+mysql> RESET MASTER;
+Query OK, 0 rows affected (0.00 sec)
+</pre>
+
+
+<p>ou se o mysqld estiver configurado como <code>SLAVE</code></p>
+
+<pre>
+mysql> RESET SLAVE;
+Query OK, 0 rows affected (0.06 sec)
+</pre>
+
+
+<p>Você ainda poderá especificar quais binlogs devem ser removidos pela sequencia da criação dos arquivos</p>
+
+<pre>
+mysql> PURGE BINARY LOGS TO 'mysql-bin.000015';
+Query OK, 0 rows affected (0.08 sec)
+</pre>
+
+
+<p>ou através da data de criação</p>
+
+<pre>
+mysql> PURGE BINARY LOGS BEFORE '20012-11-10 00:00:00';
+Query OK, 0 rows affected (0.11 sec)
+</pre>
+
+
+<p>Ou mesmo utilizando o <code>mysqladmin</code> com o parametro <code>flush-logs</code>, que exclui qualquer binlog anterior a 3 dias</p>
+
+<pre>
+jazz//deadcow ~ % mysqladmin -u root flush-logs
+</pre>
+
+
+<p>A remoção dos binlogs devem ser realizadas através do proprio MySQL, remoções diretas podem causar efeitos inesperados no comportamento normal do serviço.</p>
+
+<p>A geração de logs pelo mysqld pode ser util ao identificar problemas de performance, porém devem ser tratados com certa cautela para que uma solução não vire uma dor de cabeça. ainda existem outros fatores que podem contribuir para o aumento do uso do disco pelo mysqld e que serão abordados em outros posts no futuro.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[O mod_gzip está funcionando?]]></title>
@@ -386,90 +460,6 @@ mysqlbinlog --start-datetime="2012-07-15 15:13:53" \
 <li><a href="http://www.mysqlperformanceblog.com/2012/01/18/backing-up-binary-log-files-with-mysqlbinlog">Backing up binary log files with mysqlbinlog</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby / DL: Acessando funções externas]]></title>
-    <link href="http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas/"/>
-    <updated>2012-10-20T14:49:00-03:00</updated>
-    <id>http://deadc.org/blog/2012/10/20/ruby-slash-dl-acessando-funcoes-externas</id>
-    <content type="html"><![CDATA[<p>Eu estava precisando acessar uma DLL especifica no Windows para automatizar um processo no serviço, eu (ainda!) não domino muito a linguagem ruby, mas por conta de todos meus colegas de trabalho fazerem uso, inclusive do RoR meio que fui absorvido por essa linguagem que, depois de python virou uma das minhas preferidas.</p>
-
-<p>Pois bem, depois de algumas tentativas frustradas na sexta-feira, resolvi no sábado pesquisar melhor como em ruby, acessar funções externas de dll’s e lib’s. meu maior problema na sexta era a falta de compatibilidade de versões do ruby, eu escrevia um código pra ruby 1.9.2 e tentava rodar em uma versão anterior, 1.8.7 (Windows em produção).</p>
-
-<p>Em casa, consegui escrever 2 scripts para versões distintas e finalmente criar o script para acessar a DLL, o script é tão simples que cheguei seriamente a pensar em não publicar isso, mas como pode ser util para alguém, segue ai!
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>dlopen18.rb  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">dl</span><span class="err">’</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="sr">&lt;p&gt;dl = DL.dlopen(‘libcurl.so’)</span>
-</span><span class='line'><span class="sr">mycall = dl[&quot;curl_version&quot;,&#39;S&#39;]</span>
-</span><span class='line'><span class="sr">puts mycall.call&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-E a versão para Ruby 1.9.2, que é um pouquinho diferente, mas tão facil quanto:
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>dlopen19.rb  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">dl</span><span class="err">’</span>
-</span><span class='line'><span class="nb">require</span> <span class="err">‘</span><span class="n">fiddle</span><span class="err">’</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="sr">&lt;p&gt;dl = DL.dlopen(‘libcurl.so’)</span>
-</span><span class='line'><span class="sr">mycall = Fiddle::Function.new(dl[&#39;curl_version&#39;], [], Fiddle::TYPE_VOIDP)</span>
-</span><span class='line'><span class="sr">puts mycall.call&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-Lembrando que por conta do uso do Fiddle, este exemplo só funciona no Ruby 1.9.3 ou superior, para ser 100% compativel com 1.9 você deve fazer as modificações necessárias.</p>
-
-<p>Explicando: no primeiro script onde se lê “curl_version” é aonde vai o nome da função externa, que a lib ou dll contém, no segundo campo, é o tipo de entrada da função mais o tipo de retorno, se a função recebesse algum argumento como por exemplo do tipo String e retornasse um Inteiro, ficaria assim:
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mycall</span> <span class="o">=</span> <span class="n">dl</span><span class="o">[</span><span class="s2">&quot;funcao&quot;</span><span class="p">,</span><span class="s1">&#39;SI&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="nb">puts</span> <span class="n">mycall</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="err">“</span><span class="n">string</span><span class="err">”</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-no segundo script isso fica mais claro já que, o retorno fica no final, enquanto os argumentos dentro de um array, que neste caso está vazio já que a função não necessita de nenhum parametro. Mais referencias de como usar e sobre os tipos possiveis de entrada nas funções RTFM</p>
-
-<p>uma dica para quem usa linux e quer saber quais funções determinada lib possui e não tem o código-fonte, é utilizar o comando nm:</p>
-
-<pre>
-deadcow@stack ~ $ nm –defined-only -D /usr/lib/libcurl.so|grep easy
-00000000000297d0 T Curl_easy_addmulti
-0000000000029b40 T Curl_easy_initHandleData
-00000000000319c0 T Curl_multi_rmeasy
-0000000000040270 T Curl_pp_easy_statemach
-0000000000029e30 T curl_easy_cleanup
-0000000000029c00 T curl_easy_duphandle
-0000000000022de0 T curl_easy_escape
-0000000000029e00 T curl_easy_getinfo
-000000000002a0d0 T curl_easy_init
-00000000000299b0 T curl_easy_pause
-0000000000029e50 T curl_easy_perform
-0000000000029930 T curl_easy_recv
-0000000000029b60 T curl_easy_reset
-0000000000029880 T curl_easy_send
-0000000000029f40 T curl_easy_setopt
-0000000000034e30 T curl_easy_strerror
-0000000000022cb0 T curl_easy_unescape
-deadcow@stack ~ $
-</pre>
-
-
-<p>obviamente consultando o oráculo depois para saber mais sobre a função!</p>
 ]]></content>
   </entry>
   

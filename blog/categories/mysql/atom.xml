@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mysql | The Abigail Oath]]></title>
   <link href="http://deadc.org/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://deadc.org/"/>
-  <updated>2012-11-07T01:01:57-02:00</updated>
+  <updated>2012-11-10T16:01:22-02:00</updated>
   <id>http://deadc.org/</id>
   <author>
     <name><![CDATA[deadc]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Binary Logs: porque meu HD está cheio?]]></title>
+    <link href="http://deadc.org/blog/2012/11/10/mysql-binary-logs-porque-meu-hd-esta-cheio/"/>
+    <updated>2012-11-10T14:34:00-02:00</updated>
+    <id>http://deadc.org/blog/2012/11/10/mysql-binary-logs-porque-meu-hd-esta-cheio</id>
+    <content type="html"><![CDATA[<p>Se o diretório onde está alocado os arquivos data de seu MySQL está crescendo mais que o normal, possivelmente você está tendo problemas com a configuração quanto a flag que determina o uso dos binlogs.</p>
+
+<p>Binlogs em sua essência são utilizados para realizar a replicação de bancos de dados e em algumas ocasiões te salvar quando algum dado é perdido, se você não realiza a replicação e tampouco se preocupa com o armazenamento dos binlogs, não existe sentido manter essa configuração.</p>
+
+<p>Para desabilitar esta opção, comente a linha no seu <code>/etc/mysql/my.cnf</code> que diz <code>log-bin=mysql-bin</code> onde define que os binlogs devem ser criados e indica qual nome dos arquivos. Você ainda pode parar a geração dos binlogs <em>on-the-fly</em> utilizando o seguinte comando como usuario <strong>root</strong></p>
+
+<pre>
+mysql> SET GLOBAL SQL_LOG_BIN=0;
+Query OK, 0 rows affected (0.00 sec)
+</pre>
+
+
+<p>Este comando na verdade não desabilita o binlogs e sim, ignora INSERTs, DDLs, UPDATEs, e DELETEs, para que a alteração seja permanente você ainda terá que editar o <code>/etc/mysql/my.cnf</code>.</p>
+
+<p>Caso você faça uso dos binlogs, você ainda pode definir um tamanho e qual a frequencia de criação destes arquivos, ajustando de acordo com a necessidade do uso, utilizando as flags:</p>
+
+<ul>
+<li><strong>max_binlog_size</strong>: que define qual tamanho maximo do arquivo em kilobytes. quando atingir este valor será criado um novo arquivo sequencial no formato nome-do-arquivo.XXXXXX</li>
+<li><strong>expire_logs_days</strong>: que define de quanto em quanto dias os binlogs serão removidos, recomenda-se utilizar o periodo minimo de 10 dias, dependendo do atraso entre o master e slave quando existir a replicação de bancos.</li>
+<li><strong>binlog-ignore-db</strong>: que especifica quais databases podem ser ignoradas pelo binlog.</li>
+<li><strong>binlog-do-db</strong>: que especifica quais databases devem ser monitoradas pelo binlog, tanto esta flag quanto a de cima interferem diretamente nas replicações de banco de dados.</li>
+</ul>
+
+
+<p>Feita a configuração, e tendo certeza que os binlogs armazenados não são mais necessários, você poderá excluir todos os binlogs através do comando</p>
+
+<pre>
+mysql> RESET MASTER;
+Query OK, 0 rows affected (0.00 sec)
+</pre>
+
+
+<p>ou se o mysqld estiver configurado como <code>SLAVE</code></p>
+
+<pre>
+mysql> RESET SLAVE;
+Query OK, 0 rows affected (0.06 sec)
+</pre>
+
+
+<p>Você ainda poderá especificar quais binlogs devem ser removidos pela sequencia da criação dos arquivos</p>
+
+<pre>
+mysql> PURGE BINARY LOGS TO 'mysql-bin.000015';
+Query OK, 0 rows affected (0.08 sec)
+</pre>
+
+
+<p>ou através da data de criação</p>
+
+<pre>
+mysql> PURGE BINARY LOGS BEFORE '20012-11-10 00:00:00';
+Query OK, 0 rows affected (0.11 sec)
+</pre>
+
+
+<p>Ou mesmo utilizando o <code>mysqladmin</code> com o parametro <code>flush-logs</code>, que exclui qualquer binlog anterior a 3 dias</p>
+
+<pre>
+jazz//deadcow ~ % mysqladmin -u root flush-logs
+</pre>
+
+
+<p>A remoção dos binlogs devem ser realizadas através do proprio MySQL, remoções diretas podem causar efeitos inesperados no comportamento normal do serviço.</p>
+
+<p>A geração de logs pelo mysqld pode ser util ao identificar problemas de performance, porém devem ser tratados com certa cautela para que uma solução não vire uma dor de cabeça. ainda existem outros fatores que podem contribuir para o aumento do uso do disco pelo mysqld e que serão abordados em outros posts no futuro.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MySQL: Binlogs Backup full e incremental]]></title>
